@@ -1,7 +1,18 @@
 "use client";
-import { Spinner } from "@/app/components";
-import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { AlertCircle, Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -20,54 +31,60 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
       setError(true);
     }
   };
+
   return (
     <>
-      <AlertDialog.Root>
-        <AlertDialog.Trigger>
-          <Button color="red">Delete Issue</Button>
-        </AlertDialog.Trigger>
-        <AlertDialog.Content>
-          <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
-          <AlertDialog.Description>
-            Are you sure you want to delete this issue ? This action cannot be
-            undone.
-          </AlertDialog.Description>
-          <Flex gap="3" mt="4" justify="end">
-            <AlertDialog.Cancel>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action>
-              <Button
-                variant="solid"
-                color="red"
-                onClick={deleteIssue}
-                disabled={isDeleting}
-              >
-                {isDeleting && <Spinner />}
-                Delete
-              </Button>
-            </AlertDialog.Action>
-          </Flex>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
-      <AlertDialog.Root open={error}>
-        <AlertDialog.Content>
-          <AlertDialog.Title>Error</AlertDialog.Title>
-          <AlertDialog.Description>
-            This issue could not be deleted.
-          </AlertDialog.Description>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
           <Button
-            color="gray"
-            variant="soft"
-            mt="2"
-            onClick={() => setError(false)}
+            variant="destructive"
+            disabled={isDeleting}
+            className="transition-all"
           >
-            OK
+            {isDeleting ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <Trash2 />
+            )}
+            &nbsp;{isDeleting ? "Please Wait" : "Delete Issue"}
           </Button>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this issue? This action cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-red-600"
+              onClick={deleteIssue}
+            >
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog open={error}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-destructive flex gap-1 items-center">
+              Error <AlertCircle />
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This issue could not be deleted.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setError(false)}>
+              OK
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

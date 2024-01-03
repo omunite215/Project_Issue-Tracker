@@ -17,8 +17,8 @@ model Issue {
   status           Status   @default(OPEN)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  assignedToUsedId String?  @db.VarChar(255)
-  assignedToUser   User?    @relation(fields: [assignedToUsedId], references: [id])
+  assignedToUserId String?  @db.VarChar(255)
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
 enum Status {

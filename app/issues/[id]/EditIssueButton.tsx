@@ -1,13 +1,15 @@
-import { Pencil2Icon } from "@radix-ui/react-icons";
-import { Button } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
+import { FileEdit } from "lucide-react";
 import Link from "next/link";
 
 const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
-    <Button>
-      <Pencil2Icon />
-      <Link href={`/issues/edit/${issueId}`}>Edit Issue</Link>
-    </Button>
+    <Link href={`/issues/edit/${issueId}`}>
+      <Button>
+        <FileEdit />
+        &nbsp;Edit Issue
+      </Button>
+    </Link>
   );
 };
 
