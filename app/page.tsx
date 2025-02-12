@@ -2,7 +2,7 @@ import prisma from "@/prisma/client";
 import LatestIssues from "./LatestIssues";
 import IssueSummary from "./IssueSummary";
 import IssueChart from "./IssueChart";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } });

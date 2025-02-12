@@ -2,7 +2,7 @@ import authOptions from "@/app/auth/authOptions";
 import { patchIssueSchema } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
@@ -17,7 +17,7 @@ export async function PATCH(
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
 
-  const { assignedToUserId, title, description } = body;
+  const { assignedToUserId, title, description, status } = body;
 
   if (assignedToUserId) {
     const user = await prisma.user.findUnique({
@@ -30,7 +30,7 @@ export async function PATCH(
   }
   const issue = await prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: Number.parseInt(params.id),
     },
   });
 
@@ -45,6 +45,7 @@ export async function PATCH(
       title,
       description,
       assignedToUserId,
+      status
     },
   });
 
@@ -59,7 +60,7 @@ export async function DELETE(
   if (!session) return NextResponse.json({}, { status: 401 });
   const issue = await prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: Number.parseInt(params.id),
     },
   });
   if (!issue)

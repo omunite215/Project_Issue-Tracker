@@ -40,7 +40,7 @@ const LatestIssues = async () => {
                     </div>
                     {issue.assignedToUser && (
                       <Avatar>
-                        <AvatarImage src={issue.assignedToUser.image!} />
+                        <AvatarImage src={issue.assignedToUser.image as string} />
                         <AvatarFallback>?</AvatarFallback>
                       </Avatar>
                     )}

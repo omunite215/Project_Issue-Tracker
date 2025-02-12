@@ -65,12 +65,12 @@ const Navbar = () => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage src={session!.user!.image!} />
+            <AvatarImage src={session?.user?.image as string} />
             <AvatarFallback>?</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{session!.user!.email}</DropdownMenuLabel>
+          <DropdownMenuLabel>{session?.user?.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href="/api/auth/signout">Logout</Link>

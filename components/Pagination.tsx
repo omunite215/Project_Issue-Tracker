@@ -24,7 +24,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   const changePage = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
-    router.push("?" + params.toString());
+    router.push(`?${params.toString()}`);
   };
   return (
     <div className="flex items-center gap-2">
